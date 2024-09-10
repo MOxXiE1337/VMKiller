@@ -12,3 +12,10 @@ add_subdirectory("dependencies/freetype")
 # zydis
 option(ZYDIS_BUILD_SHARED_LIB "" ON)
 add_subdirectory("dependencies/zydis")
+
+# sqlite cpp
+option(BUILD_SHARED_LIBS "" ON)
+add_subdirectory("dependencies/SQLiteCpp")
+
+INSTALL( TARGETS  SQLiteCpp  RUNTIME  DESTINATION bin)
+INSTALL( TARGETS  sqlite3  RUNTIME  DESTINATION bin)
