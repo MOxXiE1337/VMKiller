@@ -1,3 +1,6 @@
 [submodule "dependencies/freetype"]
 	path = dependencies/freetype
 	url = https://github.com/freetype/freetype.git
+[submodule "dependencies/zydis"]
+	path = dependencies/zydis
+	url = https://github.com/zyantific/zydis.git
