@@ -7,3 +7,7 @@
 [submodule "dependencies/SQLiteCpp"]
 	path = dependencies/SQLiteCpp
 	url = https://github.com/SRombauts/SQLiteCpp.git
+[submodule "dependencies/imgui"]
+	path = dependencies/imgui
+	url = https://github.com/ocornut/imgui.git
+	branch = docking
