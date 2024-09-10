@@ -4,3 +4,6 @@
 [submodule "dependencies/zydis"]
 	path = dependencies/zydis
 	url = https://github.com/zyantific/zydis.git
+[submodule "dependencies/SQLiteCpp"]
+	path = dependencies/SQLiteCpp
+	url = https://github.com/SRombauts/SQLiteCpp.git
