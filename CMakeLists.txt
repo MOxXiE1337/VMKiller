@@ -6,8 +6,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
 # freetype
-set(BUILD_SHARED_LIBS true)
+option(BUILD_SHARED_LIBS "" ON)
 add_subdirectory("dependencies/freetype")
 
-# imgui
-add_subdirectory("dependencies/imgui-cmake")
+# zydis
+option(ZYDIS_BUILD_SHARED_LIB "" ON)
+add_subdirectory("dependencies/zydis")
