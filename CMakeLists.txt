@@ -3,10 +3,20 @@ project(VMKiller VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+option(BUILD_SHARED_LIBS "" ON)
+
+# vmksdk
+include_directories("vmksdk/vmkcpp")
+
+# vmk modules
+add_subdirectory("modules")
+
+# glfw
+add_subdirectory("dependencies/glfw")
 
 # freetype
-option(BUILD_SHARED_LIBS "" ON)
 add_subdirectory("dependencies/freetype")
 
 # zydis
@@ -17,5 +27,10 @@ add_subdirectory("dependencies/zydis")
 option(BUILD_SHARED_LIBS "" ON)
 add_subdirectory("dependencies/SQLiteCpp")
 
-INSTALL( TARGETS  SQLiteCpp  RUNTIME  DESTINATION bin)
-INSTALL( TARGETS  sqlite3  RUNTIME  DESTINATION bin)
+
+# install settings
+install( TARGETS  vmkui  RUNTIME DESTINATION bin)
+
+
+install( TARGETS  SQLiteCpp  RUNTIME  DESTINATION bin)
+install( TARGETS  sqlite3  RUNTIME  DESTINATION bin)

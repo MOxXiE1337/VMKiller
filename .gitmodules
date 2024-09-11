@@ -1,9 +1,6 @@
 [submodule "dependencies/freetype"]
 	path = dependencies/freetype
 	url = https://github.com/freetype/freetype.git
-[submodule "dependencies/zydis"]
-	path = dependencies/zydis
-	url = https://github.com/zyantific/zydis.git
 [submodule "dependencies/SQLiteCpp"]
 	path = dependencies/SQLiteCpp
 	url = https://github.com/SRombauts/SQLiteCpp.git
@@ -11,3 +8,6 @@
 	path = dependencies/imgui
 	url = https://github.com/ocornut/imgui.git
 	branch = docking
+[submodule "dependencies/glfw"]
+	path = dependencies/glfw
+	url = https://github.com/glfw/glfw.git
