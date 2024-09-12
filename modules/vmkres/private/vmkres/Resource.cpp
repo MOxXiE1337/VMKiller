@@ -1,9 +1,9 @@
-#include "Resource.h"
+#include <vmkres/Resource.h>
 #include "ResourcePackageType.h"
 
 namespace vmkres
 {
-	Resource::Resource(const void* data, size_t size)
+	Resource::Resource(const void* data, size_t size) : m_ref(0), m_lock()
 	{
 		m_data = new char[size];
 		m_size = size;
@@ -17,6 +17,31 @@ namespace vmkres
 	Resource::~Resource()
 	{
 		delete[] m_data;
+	}
+
+	void Resource::lock()
+	{
+		m_lock.lock();
+		m_ref++;
+	}
+
+	void Resource::unlock()
+	{
+		if (m_ref > 0)
+		{
+			m_lock.unlock();
+			m_ref--;
+		}
+	}
+
+	const void* Resource::data() const
+	{
+		return m_data;
+	}
+
+	size_t Resource::size() const
+	{
+		return m_size;
 	}
 
 	void ResourcePackage::loadResourcePackage(const char* path)
@@ -63,7 +88,7 @@ namespace vmkres
 		
 		std::unordered_map<uint32_t, std::string> pathBuilder{};
 
-		for (auto i = 0; i < indicesNum; i++)
+		for (uint32_t i = 0; i < indicesNum; i++)
 		{
 			ResourceIndex* resourceIndex = &package->Indices[i];
 			
@@ -71,7 +96,7 @@ namespace vmkres
 
 			// build path
 			std::string resourcePath{};
-			for (auto j = 1; j < resourceIndex->Level; j++)
+			for (uint32_t j = 1; j < resourceIndex->Level; j++)
 			{
 				if (j > 1)
 					resourcePath += ".";
@@ -83,22 +108,31 @@ namespace vmkres
 			{
 				m_resources[resourcePath] = std::make_shared<Resource>(dataTable + resourceIndex->Data, resourceIndex->Size);
 			}
-			catch (vmkutils::Exception& exception)
+			catch (vmkutils::Exception<_ResourcePackageError>& exception)
 			{
 				throw exception; // re throw
 			}
 		}
 	}
 
-	std::shared_ptr<Resource> ResourcePackage::findResource(const char* resourcePath)
+	std::shared_ptr<Resource> ResourcePackage::lockResource(const char* resourcePath)
 	{
-		if(!m_loaded)
-			return std::shared_ptr<Resource>(nullptr);
+		if (!m_loaded)
+			throw vmkutils::Exception("vmkres: Resource package is not loaded", _ResourcePackageError::PACKAGE_NOT_LOADED);
 
-		auto &resource = m_resources.find(resourcePath);
+		auto& resource = m_resources.find(resourcePath);
+
 		if (resource == m_resources.end())
-			return std::shared_ptr<Resource>(nullptr);
+			throw vmkutils::Exception(std::string("vmkres: Resource ") + resourcePath + " isn't existed", _ResourcePackageError::RESOURCE_NOT_EXISTED);
+
+		resource->second->lock();
 		return resource->second;
+	}
+
+	void ResourcePackage::unlockResource(const std::shared_ptr<Resource>& resource)
+	{
+		if (resource)
+			resource->unlock();
 	}
 
 	void ResourcePackage::getResources(ResourceList& resourceList)

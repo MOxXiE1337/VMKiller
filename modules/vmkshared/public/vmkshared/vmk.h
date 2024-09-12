@@ -1,9 +1,16 @@
 // std requires
+#include <mutex>
+#include <thread>
+
 #include <memory>
 #include <string>
+#include <array>
+#include <queue>
+#include <vector>
 #include <fstream>
-
+#include <functional>
 #include <unordered_map>
+
 
 #ifndef __VMK_H__
 #define __VMK_H__

@@ -5,15 +5,16 @@
 
 namespace vmkutils
 {
+	template <typename _EnumType>
 	class VMK_API Exception
 	{
 	public:
-		Exception(const std::string& errorMsg, int id) : m_errorMsg(errorMsg), m_id(id) {}
-	
+		Exception(const std::string& errorMsg, _EnumType id) : m_errorMsg(errorMsg), m_id(id) {}
+
 		virtual std::string what() { return m_errorMsg; }
 	protected:
 		std::string m_errorMsg;
-		int         m_id;
+		_EnumType         m_id;
 	};
 }
 

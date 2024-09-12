@@ -5,12 +5,15 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-include_directories("../vmkshared/vmkshared")
-include_directories("../vmkutils/vmkutils")
+include_directories(public)
+include_directories(../vmkshared/public)
+include_directories(../vmkutils/public)
 
 add_compile_definitions(VMK_EXPORT)
 
 set(VMKRES_SRCS 
-	"vmkres/vmkres/Resource.cpp")
+	private/vmkres/Resource.cpp)
 
 add_library(${PROJECT_NAME} SHARED ${VMKRES_SRCS})
+
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION VMKiller)

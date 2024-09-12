@@ -27,6 +27,9 @@ add_subdirectory("dependencies/SQLiteCpp")
 
 ### Modules
 
+# vmkui
+add_subdirectory("modules/vmkui")
+
 # vmkres
 add_subdirectory("modules/vmkres")
 
@@ -36,11 +39,7 @@ add_subdirectory("modules/vmkres")
 ### Tools
 
 if (VMK_BUILD_TOOLS)
-	add_subdirectory("tools/vmkres_editor")
+	add_subdirectory("tools/vmkpacker")
 endif()
 
 #########
-
-# install settings
-install( TARGETS  SQLiteCpp  RUNTIME  DESTINATION bin)
-install( TARGETS  sqlite3  RUNTIME  DESTINATION bin)
